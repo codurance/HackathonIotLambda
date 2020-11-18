@@ -1,46 +1,57 @@
-/*
-Input 
-{
-  date: 18112020T121530,
-  temp: "105.5F",
-  txt: "Bedroom"
-}
-
-Output 
-{
-  date: "12:15:30",
-  temp: "40.72"
-  txt: "Bedroom"
-}
-*/
-
 async function sanitizer(event, context) {
   const response = {
-    date: extractTime(`${event.date}`),
-    temp: extractAndConvertTemp(event.temp),
-    txt: event.txt
+    date: transformToTime(event.date),
+    temperature: extractAndConvertTemperature(event.temperature),
+    txt: extractText(event.txt)
   };
 
   return response;
+}
+
+function transformToTime(eventDate) {
+  const utcDate = new Date(extractDate(eventDate) + extractTime(eventDate) + extractTimeZone(eventDate))
+  return utcDate.toLocaleTimeString("en-GB");
+}
+
+function extractDate(date) {
+  const year = date.substr(0, 4);
+  const month = date.substr(4, 2);
+  const day = date.substr(6, 2);
+  return year + "-" + month + "-" + day;
 }
 
 function extractTime(date) {
   const hour = date.substr(8, 2);
   const min = date.substr(10, 2);
   const sec = date.substr(12, 2);
-  return hour + ":" + min + ":" + sec;
+  return "T" + hour + ":" + min + ":" + sec;
 }
 
-function extractAndConvertTemp(tempAsString) {
-  const isFahrenheit = tempAsString.includes("F");
+function extractTimeZone(date) {
+  const sign = date.substr(14, 1);
+  let hours = date.substr(15, 2);
+  if(hours < 10){
+    hours = "0" + hours
+  }
+  
+  const timeZone = date.substr(14, 3)+":00";
+  return sign+hours+":00";
+}
+
+function extractText(text) {
+  return text;
+}
+
+function extractAndConvertTemperature(temperatureAsString) {
+  const isFahrenheit = temperatureAsString.includes("F");
   const removeLastChar = (text) => text.substr(0, text.length - 1);
 
-  let temp = removeLastChar(tempAsString);
+  let temperature = removeLastChar(temperatureAsString);
 
   if (isFahrenheit) {
-    temp = toCelcius(temp).toFixed(2);
+    temperature = toCelcius(temperature).toFixed(2);
   }
-  return Number.parseFloat(temp);
+  return Number.parseFloat(temperature);
 }
 
 function toCelcius(fahrenheit) {

@@ -5,6 +5,7 @@ function_name=sanitizer
 invoke_result_filename=out
 
 PAYLOAD='{ "hey": "this is a test" }'
+PAYLOAD='{ "date": "18112020121530", "temp": "31F" }'
 
 
 payload_b64=$(echo -n $PAYLOAD | openssl base64)

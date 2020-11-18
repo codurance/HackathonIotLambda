@@ -1,1 +1,0 @@
-{"attemptsMade":4,"arrivalTimestamp":1605718104269,"errorCode":"Lambda.FunctionError","errorMessage":"The Lambda function was successfully invoked but it returned an error result.","attemptEndingTimestamp":1605718181315,"rawData":"eyAiZGF0ZSI6ICIxODExMjAyMDEyMTUzMCIsICJ0ZW1wIjogIjMxRiIgfQ==","lambdaArn":"arn:aws:lambda:eu-west-1:300563897675:function:sanitizer:$LATEST"}

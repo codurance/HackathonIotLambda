@@ -14,3 +14,6 @@ zip -j $function_name.zip ../src/index.js
 aws lambda update-function-code \
     --function-name $function_name \
     --zip-file fileb://$function_name.zip
+
+# Cleanup
+rm $function_name.zip

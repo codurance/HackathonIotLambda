@@ -1,0 +1,15 @@
+{
+  "name": "hackathon",
+  "version": "1.0.0",
+  "description": "## Resources - https://docs.aws.amazon.com/lambda/latest/dg/lambda-j.html",
+  "main": "index.js",
+  "dependencies": {
+    "aws-sdk": "^2.794.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

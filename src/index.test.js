@@ -16,14 +16,16 @@ Output
 }
 */
 describe("Sanitizer", () => {
-  it("should remove the date and keep the time", async () => {
-    const event = {
-      date: 18112020121530,
-      temp: "0C",
-    };
-    const response = await handler(event);
-
-    expect(response.date).toBe("12:15:30");
+  describe("Date and time", () => {
+    it("should remove the date and keep the time", async () => {
+      const event = {
+        date: 18112020121530,
+        temp: "0C",
+      };
+      const response = await handler(event);
+  
+      expect(response.date).toBe("12:15:30");
+    });
   });
 
   describe("Temperature", () => {
@@ -43,6 +45,19 @@ describe("Sanitizer", () => {
       const response = await handler(event);
 
       expect(response.temp).toBe(40.83);
+    });
+  });
+
+  describe("Text", () => {
+    it("should return the text as it is", async () => {
+      const event = {
+        date: 18112020121530,
+        temp: "0C",
+        txt: "Bedroom"
+      };
+      const response = await handler(event);
+  
+      expect(response.txt).toBe("Bedroom");
     });
   });
 });

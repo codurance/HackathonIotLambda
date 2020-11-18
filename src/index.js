@@ -18,6 +18,7 @@ async function sanitizer(event, context) {
   const response = {
     date: extractTime(`${event.date}`),
     temp: extractAndConvertTemp(event.temp),
+    txt: event.txt
   };
 
   return response;

@@ -1,0 +1,20 @@
+{
+  "FunctionName": "sanitizer",
+  "FunctionArn": "arn:aws:lambda:eu-west-1:300563897675:function:sanitizer",
+  "Runtime": "nodejs12.x",
+  "Role": "arn:aws:iam::300563897675:role/hackathon-lambda-role",
+  "Handler": "index.handler",
+  "CodeSize": 318,
+  "Description": "",
+  "Timeout": 3,
+  "MemorySize": 128,
+  "LastModified": "2020-11-18T13:21:15.698+0000",
+  "CodeSha256": "EcExMsPkwstT8TeuQSXoqM+w3Q6S7xHsR8BMszy0tG4=",
+  "Version": "$LATEST",
+  "TracingConfig": {
+    "Mode": "PassThrough"
+  },
+  "RevisionId": "accf1189-6817-44c1-8608-bbb4aff4b774",
+  "State": "Active",
+  "LastUpdateStatus": "Successful"
+}

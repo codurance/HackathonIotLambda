@@ -1,4 +1,4 @@
-const { handler } = require("./index.js");
+const { handler, parseStream } = require("./index.js");
 
 /*
 Input 
@@ -16,6 +16,51 @@ Output
 }
 */
 describe("Sanitizer", () => {
+
+  const event = {
+    "Records": [
+      {
+        "kinesis": {
+          "data": "ewogIGRhdGU6ICIxMjoxNTozMCIsCiAgdGVtcGVyYXR1cmU6ICIwIiwKICB0eHQ6ICJCZWRyb29tIgp9",
+        }
+      },
+      {
+        "kinesis": {
+          "data": "ewogIGRhdGU6ICIxMzoyMjoyMCIsCiAgdGVtcGVyYXR1cmU6ICIzMS41IiwKICB0eHQ6ICJCYXRocm9vbSIKfQ==",
+        }
+      },
+      {
+        "kinesis": {
+          "data": "ewogIGRhdGU6ICIyMTo0MDoxNSIsCiAgdGVtcGVyYXR1cmU6ICIzNS4zIiwKICB0eHQ6ICJLaXRjaGVuIgp9",
+        }
+      }
+    ]
+  };
+
+  describe("Regression", async () => {
+    it('should sanitize an event', async () => {
+      const response = await handler(event);
+
+      expect(response).toBe([
+        {
+          date: "12:15:30",
+          temperature: "0",
+          txt: "Bedroom"
+        },
+        {
+          date: "13:22:20",
+          temperature: "31.5",
+          txt: "Bathroom"
+        },
+        {
+          date: "21:40:15",
+          temperature: "35.3",
+          txt: "Kitchen"
+        }
+      ]);
+    });
+  });
+
   describe("Date and time", () => {
     it("should remove the date and keep the time", async () => {
       const event = {
@@ -70,6 +115,24 @@ describe("Sanitizer", () => {
       const response = await handler(event);
   
       expect(response.txt).toBe("Bedroom");
+    });
+  });
+
+  describe("Parser", async () => {
+    it("should parse the correct amount of event data",() => {
+      const response = parseStream(event);
+
+      expect(response.length).toBe(3);
+    });
+
+    it('should contain the base64 encrypted data', () => {
+      const response = parseStream(event);
+
+      expect(response).toEqual([
+        "ewogIGRhdGU6ICIxMjoxNTozMCIsCiAgdGVtcGVyYXR1cmU6ICIwIiwKICB0eHQ6ICJCZWRyb29tIgp9",
+        "ewogIGRhdGU6ICIxMzoyMjoyMCIsCiAgdGVtcGVyYXR1cmU6ICIzMS41IiwKICB0eHQ6ICJCYXRocm9vbSIKfQ==",
+        "ewogIGRhdGU6ICIyMTo0MDoxNSIsCiAgdGVtcGVyYXR1cmU6ICIzNS4zIiwKICB0eHQ6ICJLaXRjaGVuIgp9"
+      ]);
     });
   });
 });

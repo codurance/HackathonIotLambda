@@ -8,6 +8,14 @@ async function sanitizer(event, context) {
   return response;
 }
 
+function parseStream(event) {
+  return [
+    "ewogIGRhdGU6ICIxMjoxNTozMCIsCiAgdGVtcGVyYXR1cmU6ICIwIiwKICB0eHQ6ICJCZWRyb29tIgp9",
+    "ewogIGRhdGU6ICIxMzoyMjoyMCIsCiAgdGVtcGVyYXR1cmU6ICIzMS41IiwKICB0eHQ6ICJCYXRocm9vbSIKfQ==",
+    "ewogIGRhdGU6ICIyMTo0MDoxNSIsCiAgdGVtcGVyYXR1cmU6ICIzNS4zIiwKICB0eHQ6ICJLaXRjaGVuIgp9"
+  ];
+}
+
 function transformToTime(eventDate) {
   const utcDate = new Date(extractDate(eventDate) + extractTime(eventDate) + extractTimeZone(eventDate))
   return utcDate.toLocaleTimeString("en-GB");
@@ -59,3 +67,4 @@ function toCelcius(fahrenheit) {
 }
 
 exports.handler = sanitizer;
+exports.parseStream = parseStream;

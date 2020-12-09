@@ -9,11 +9,16 @@ async function sanitizer(event, context) {
 }
 
 function parseStream(event) {
-  return [
-    "ewogIGRhdGU6ICIxMjoxNTozMCIsCiAgdGVtcGVyYXR1cmU6ICIwIiwKICB0eHQ6ICJCZWRyb29tIgp9",
-    "ewogIGRhdGU6ICIxMzoyMjoyMCIsCiAgdGVtcGVyYXR1cmU6ICIzMS41IiwKICB0eHQ6ICJCYXRocm9vbSIKfQ==",
-    "ewogIGRhdGU6ICIyMTo0MDoxNSIsCiAgdGVtcGVyYXR1cmU6ICIzNS4zIiwKICB0eHQ6ICJLaXRjaGVuIgp9"
-  ];
+  const records = event.Records;
+
+  const data = [];
+  records.forEach(record => {
+    const decodedRecord = atob(record.kinesis.data);
+    const parsedRecord = JSON.parse(decodedRecord);
+    data.push(parsedRecord);
+  });
+
+  return data;
 }
 
 function transformToTime(eventDate) {

@@ -21,17 +21,17 @@ describe("Sanitizer", () => {
     "Records": [
       {
         "kinesis": {
-          "data": "ewogIGRhdGU6ICIxMjoxNTozMCIsCiAgdGVtcGVyYXR1cmU6ICIwIiwKICB0eHQ6ICJCZWRyb29tIgp9",
+          "data": "ewogICJkYXRlIjogIjEyOjE1OjMwIiwKICAidGVtcGVyYXR1cmUiOiAiMCIsCiAgInR4dCI6ICJCZWRyb29tIgp9",
         }
       },
       {
         "kinesis": {
-          "data": "ewogIGRhdGU6ICIxMzoyMjoyMCIsCiAgdGVtcGVyYXR1cmU6ICIzMS41IiwKICB0eHQ6ICJCYXRocm9vbSIKfQ==",
+          "data": "ewogICJkYXRlIjogIjEzOjIyOjIwIiwKICAidGVtcGVyYXR1cmUiOiAiMzEuNSIsCiAgInR4dCI6ICJCYXRocm9vbSIKfQ==",
         }
       },
       {
         "kinesis": {
-          "data": "ewogIGRhdGU6ICIyMTo0MDoxNSIsCiAgdGVtcGVyYXR1cmU6ICIzNS4zIiwKICB0eHQ6ICJLaXRjaGVuIgp9",
+          "data": "ewogICJkYXRlIjogIjIxOjQwOjE1IiwKICAidGVtcGVyYXR1cmUiOiAiMzUuMyIsCiAgInR4dCI6ICJLaXRjaGVuIgp9",
         }
       }
     ]
@@ -127,12 +127,25 @@ describe("Sanitizer", () => {
 
     it('should contain the base64 encrypted data', () => {
       const response = parseStream(event);
+      const parsedData = [
+        {
+          date: "12:15:30",
+          temperature: "0",
+          txt: "Bedroom"
+        },
+        {
+          date: "13:22:20",
+          temperature: "31.5",
+          txt: "Bathroom"
+        },
+        {
+          date: "21:40:15",
+          temperature: "35.3",
+          txt: "Kitchen"
+        }
+      ];
 
-      expect(response).toEqual([
-        "ewogIGRhdGU6ICIxMjoxNTozMCIsCiAgdGVtcGVyYXR1cmU6ICIwIiwKICB0eHQ6ICJCZWRyb29tIgp9",
-        "ewogIGRhdGU6ICIxMzoyMjoyMCIsCiAgdGVtcGVyYXR1cmU6ICIzMS41IiwKICB0eHQ6ICJCYXRocm9vbSIKfQ==",
-        "ewogIGRhdGU6ICIyMTo0MDoxNSIsCiAgdGVtcGVyYXR1cmU6ICIzNS4zIiwKICB0eHQ6ICJLaXRjaGVuIgp9"
-      ]);
+      expect(response).toEqual(parsedData);
     });
   });
 });

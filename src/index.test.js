@@ -21,12 +21,12 @@ describe("Sanitizer", () => {
     "Records": [
       {
         "kinesis": {
-          "data": "ewogICJkYXRlIjogIjEyOjE1OjMwIiwKICAidGVtcGVyYXR1cmUiOiAiMCIsCiAgInR4dCI6ICJCZWRyb29tIgp9",
+          "data": "ewogICJkYXRlIjogIjEyOjE1OjMwIiwKICAidGVtcGVyYXR1cmUiOiAiMCIsCiAgInR4dCI6ICJCZWRyb29tIgp9"
         }
       },
       {
         "kinesis": {
-          "data": "ewogICJkYXRlIjogIjEzOjIyOjIwIiwKICAidGVtcGVyYXR1cmUiOiAiMzEuNSIsCiAgInR4dCI6ICJCYXRocm9vbSIKfQ==",
+          "data": "ewogICJkYXRlIjogIjEzOjIyOjIwIiwKICAidGVtcGVyYXR1cmUiOiAiMzEuNSIsCiAgInR4dCI6ICJCYXRocm9vbSIKfQ=="
         }
       },
       {
